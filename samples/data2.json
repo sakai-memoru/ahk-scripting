@@ -1,0 +1,100 @@
+text:="
+(
+{
+"users": [
+{
+"_id": "45166552176594981065",
+"index": 692815193,
+"guid": "oLzFhQttjjCGmijYulZg",
+"isActive": true,
+"balance": "XtMtTkSfmQtyRHS1086c",
+"picture": "Q8YoyJ0cL1MGFwC9bpAzQXSFBEcAUQ8lGQekvJZDeJ5C5p",
+"age": 23,
+"eyeColor": "XqoN9IzOBVixZhrofJpd",
+"name": "xBavaMCv6j0eYkT6HMcB",
+"gender": "VnuP3BaA3flaA6dLGvqO",
+"company": "L9yT2IsGTjOgQc0prb4r",
+"email": "rfmlFaVxGBSZFybTIKz0",
+"phone": "vZsxzv8DlzimJauTSBre",
+"address": "fZgFDv9tX1oonnVjcNVv",
+"about": "WysqSAN1psGsJBCFSR7P",
+"registered": "Lsw4RK5gtyNWGYp9dDhy",
+"latitude": 2.6395313895198393,
+"longitude": 110.5363758848371,
+"tags": [
+"Hx6qJTHe8y",
+"23vYh8ILj6",
+"geU64sSQgH",
+"ezNI8Gx5vq"
+],
+"friends": [
+{
+"id": "3987",
+"name": "dWwKYheGgTZejIMYdglXvvrWAzUqsk"
+},
+{
+"id": "4673",
+"name": "EqVIiZyuhSCkWXvqSxgyQihZaiwSra"
+}
+],
+"greeting": "xfS8vUXYq4wzufBLP6CY",
+"favoriteFruit": "KT0tVAxXRawtbeQIWAot"
+},
+{
+"_id": "23504426278646846580",
+"index": 675066974,
+"guid": "MfiCc1n1WfG6d6iXcdNf",
+"isActive": true,
+"balance": "OQEwTOBvwK0b8dJYFpBU",
+"picture": "avtMGQxSrO1h86V7KVaKaWUFZ0ooZd9GmIynRomjCjP8tEN",
+"age": 33,
+"eyeColor": "Fjsm1nmwyphAw7DRnfZ7",
+"name": "NnjrrCj1TTObhT9gHMH2",
+"gender": "ISVVoyQ4cbEjQVoFy5z0",
+"company": "AfcGdkzUQMzg69yjvmL5",
+"email": "mXLtlNEJjw5heFiYykwV",
+"phone": "zXbn9iJ5ljRHForNOa79",
+"address": "XXQUcaDIX2qpyZKtw8zl",
+"about": "GBVYHdxZYgGCey6yogEi",
+"registered": "bTJynDeyvZRbsYQIW9ys",
+"latitude": 16.675958191062414,
+"longitude": 114.20858157883556,
+"tags": [],
+"friends": [],
+"greeting": "EQqKZyiGnlyHeZf9ojnl",
+"favoriteFruit": "9aUx0u6G840i0EeKFM4Z"
+}
+]
+}
+)"
+Y:=Yaml(text)
+MsgBox Yaml(Y[1],-5)
+Yaml("{`"test`": 1}",Y)
+MsgBox Yaml(Y,-5)
+MsgBox Yaml(Map("test",1,"try","hand"),-5)
+*/
+
+;~ #include <windows.h>
+;~ WCHAR* getline(WCHAR *i, BOOL set){
+	;~ if (i==NULL || *i == L'\0')
+		;~ return 0;
+	;~ for (; *i; i++)
+	;~ {
+		;~ if (*i == L'\n')
+		;~ {
+			;~ if (set)
+				;~ *i = L'\0';
+			;~ return i + 1;
+		;~ }
+		;~ else if (*i == L'\r' && *(i + 1) == L'\n')
+		;~ {
+			;~ if (set)
+			;~ {
+				;~ *i = L'\0';
+;~ //				*(i+1) = L'\0';
+			;~ }
+			;~ return i + 2;
+		;~ }
+	;~ }
+	;~ return i;
+;~ }

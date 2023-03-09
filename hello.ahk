@@ -5,10 +5,10 @@ debug_mode := true
 ;;; debug method
 WriteLine(val){
 ; debug method
-if debug_mode 
+if debug_mode
 {
   dtm_str := FormatTime(, "yy-MM-dd HH:mm:ss")
-  send dtm_str " > " val "{Enter}"
+  Send(dtm_str " > " val "{Enter}")
 }
 ; end_func
 return
@@ -26,8 +26,17 @@ return
 }
 
 ;;; entry point
-::/run main:: {
-; hotstrings = /run main
+^+m:: {
+; hotkey = ctrl+shift+m
 Main
 }
 
+::/run:: {
+; hotstrings = /run
+Main
+}
+
+::/hello:: {
+; hotstrings = /hello
+Send "Hello, world{!}{!}"
+}

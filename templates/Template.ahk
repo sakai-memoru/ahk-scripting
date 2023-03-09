@@ -1,37 +1,20 @@
-;;; Global variables
-debug_mode := true
+#Requires AutoHotkey v2.0
+; sandbox for trying codes
 
-;;; Debug functions
-WriteLine(val)
+global Console := FileOpen("*","w")
+
+GetMessage(name)
 {
-dtm_str := FormatTime(, "yy-MM-dd_HH:mm:ss")
-if debug_mode
-	Send dtm_str  " > "  val  "{Enter}"
-	; Send dtm_str . " > " . val . "{Enter}"
+  msg := "Hello, " name "!!"
+  return msg
 }
 
-;;; local functions
-Perform(val){
-; Perform func
-WriteLine("Hello," val  "{!}{!}")
-
-; end func
-return
-}
-
-;;; main
-Main(){
-; main
-WriteLine("// ----------- // start")
-name := "AutoHotKey"
-Perform(name) ;
-WriteLine("// ----------- // end .")
-
-; end func
-return
-}
-
-;;; entry point
-::/run::{
 Main()
+{
+name := "AHK on Mery"
+msg := GetMessage(name)
+Console.WriteLine(msg)
 }
+
+; ---------------------------- entry point
+Main
