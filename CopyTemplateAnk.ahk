@@ -1,6 +1,6 @@
 #Requires AutoHotkey v2.0
 ; sandbox for trying codes
-; 
+;
 SetWorkingDir A_ScriptDir
 global Console := FileOpen("*","w")
 
@@ -24,6 +24,9 @@ Perform()
 Main(){
 Console.WriteLine("// --------------- start .")
 Perform()
+Run "Mery"
+Sleep 1000
+Send "^v"
 Console.WriteLine("// --------------- end ...")
 }
 

@@ -1,4 +1,4 @@
-;;; -------------------------------- Global variables
+﻿;;; -------------------------------- Global variables
 global debug_mode := true
 global Console := FileOpen("*", "w")
 
@@ -14,8 +14,11 @@ WriteDebug(val){
 ;;; -------------------------------- local functions
 Perform(val){
     ; Perform func
-    WriteDebug("Hello, " val  " !!")
-
+	userDir := ""
+    WriteDebug(A_MyDocuments)
+	SplitPath(A_MyDocuments, , &userDir)
+	picsDir := userDir "\Pictures"
+    Run picsDir
     ; end func
     return
 }
