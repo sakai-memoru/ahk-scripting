@@ -3,59 +3,46 @@
 
 ;;; -------------------------------- Include CONF
 #Include %A_ScriptDir%\config\settings.ahk
-#Include %A_ScriptDir%\Mustache.ahk
-; #Include %A_ScriptDir%\DebugFunc.ahk
+#Include %A_ScriptDir%\lib\Mustache.ahk
+; #Include %A_ScriptDir%\lib\DebugFunc.ahk
 
 
 ;;; -------------------------------- Global variables
-global debug_mode := Config.DEBUG_MODE
 global input_dir := A_ScriptDir Config.INPUT_DIR
 global backup_dir := A_ScriptDir Config.BACKUP_DIR
+debug_mode := Config.DEBUG_MODE
 
+
+;;; -------------------------------- sample class
+Class User{
+    __New(name, postno , age)
+    {
+        this.name := name
+        this.postno := postno
+        this.age := age
+    }
+}
 
 ;;; -------------------------------- local functions
-GetFiles(dir, likeopt := "*.*"){
-    retAry := Array()
-    Loop Files, (dir likeopt)
-        ; WriteDebug(dir A_LoopFileName)
-        retAry.Push(dir A_LoopFileName)
-
-    return retAry
-}
-
-MoveFiles(ary, to_dir) {
-    Loop ary.Length
-        FileMove(ary[A_Index], to_dir)
-
-    return
-}
-
 Process(val){
     ; Perform func
     ; WriteDebug("Hello, " val  " !!!")
-    ; WriteDebug(input_dir)
-    ; WriteDebug(backup_dir)
-    ary := Array()
-    ary := GetFiles(input_dir, "*.txt")
+    customer := User("Hot Mura", "123-4567", 33)
+    ; WriteDebug(Type(customer))
+    ; WriteDebug(customer)
 
-    WriteDebug(ary)
-    MoveFiles(ary, backup_dir)
-
-    ;; -------------------------
-    clrs := Map()
-    clrs["Red"] := "ff0000"
-    clrs["Green"] := "00ff00"
-    clrs["Blue"] := "0000ff"
-    WriteDebug(clrs)
     ;;
-    template := "{{desc}}, {{name}} !!"
+    template := "Hi Hi {{desc}}, {{name}} !!" ;; --- Object
+    ; WriteDebug(template)
+    ;;
     dataObject := {name: "AHK and Mustache", desc: "Hello"}
-    ;WriteDebug(compiledTemplate)
     WriteDebug(Type(dataObject))
     WriteDebug(dataObject)
 
+
     ; This template can be stored and re-used for better performance
     compiledTemplate := Mustache.Compile(template)
+    writeDebug(compiledTemplate)
 
     ; Render in the data
     renderedTemplate := Mustache.Render(compiledTemplate, dataObject)

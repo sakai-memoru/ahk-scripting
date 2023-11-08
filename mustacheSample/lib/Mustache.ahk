@@ -1,6 +1,9 @@
-﻿#include %A_ScriptDir%\Util.ahk
-#include %A_ScriptDir%\Token.ahk
-#Include %A_ScriptDir%\DebugFunc.ahk
+﻿#include %A_ScriptDir%\lib\Util.ahk
+#include %A_ScriptDir%\lib\Token.ahk
+#Include %A_ScriptDir%\lib\DebugFunc.ahk
+;~ #include %A_ScriptDir%\Util.ahk
+;~ #include %A_ScriptDir%\Token.ahk
+;~ #Include %A_ScriptDir%\DebugFunc.ahk
 
 /**
  * Class:
@@ -79,7 +82,7 @@ class Mustache {
     }
 
     ; ----------------------------------
-    ; Private API
+    ; Private Class
     ; ----------------------------------
     class Compiler {
 
@@ -107,7 +110,7 @@ class Mustache {
                         skipNextLinebreak := false
                     }
 
-                    textBuffer := this.WriteTextBuffer(tokens, textBuffer)
+                    textBuffer := this.WriteTextBuffer(&tokens, textBuffer)
 
                     currentLine++
                     startOfLine := true
@@ -311,18 +314,18 @@ class Mustache {
                     } ; Tag capture ends
                 } ; Tag search ends
 
-                onlyWhitespace := (onlyWhitespace
-                    && Util.IsWhitespaceChar(char))
+                onlyWhitespace := (onlyWhitespace && Util.IsWhitespaceChar(char))
 
                 textBuffer .= char
             }
 
             textBuffer := this.WriteTextBuffer(&tokens, textBuffer)
-            WriteDebug(textBuffer)
 
             if (iterable) {
                 msgBox "Error, unclosed tag"
             }
+
+            ;; WriteDebug(tokens) ;; -----------------------------------------------------
 
             return tokens
         }
@@ -634,10 +637,56 @@ class Mustache {
         }
     }
 
-    ; ----------------------------------
-    ; Private API - Util
-    ; ----------------------------------
 
+    ; ----------------------------------
+    ; Private Class - Components
+    ; ----------------------------------
+    class Reader {
+        __New(string) {
+            this.buffer := StrSplit(string)
+            this.pointer := 0
+        }
+
+        Mark() {
+            this.markedPoint := this.pointer
+        }
+
+        Read() {
+            if (this.pointer == this.buffer.Length) {
+                return ""
+            }
+
+            this.pointer++
+            return this.buffer[this.pointer]
+        }
+
+        Reset() {
+            newPointer := 0
+            if (this.markedPoint)
+                newPointer := this.markedPoint
+
+            this.pointer := newPointer
+        }
+    }
+
+    class Writer {
+        string := ""
+
+        Write(string) {
+            this.string .= string
+        }
+
+        Flush() {
+            returnString := this.string
+            this.string := ""
+
+            return returnString
+        }
+    }
+
+    ; ----------------------------------
+    ; Private Exception Methods
+    ; ----------------------------------
     CompilerException(string, command) {
         title := "`n{{ mustache exception }}"
         message := title . "`nMessage: " . string
@@ -671,50 +720,5 @@ class Mustache {
     }
 
 
-    ; ----------------------------------
-    ; Private API - Components
-    ; ----------------------------------
-
-
-    class Reader {
-        __New(string) {
-            this.buffer := StrSplit(string)
-            this.pointer := 0
-        }
-
-        Mark() {
-            this.markedPoint := this.pointer
-        }
-
-        Read() {
-            if (this.pointer == this.buffer.Length) {
-                return ""
-            }
-
-            this.pointer++
-            return this.buffer[this.pointer]
-        }
-
-        Reset() {
-            newPointer := 0
-            if (this.markedPoint)
-                newPointer := this.markedPoint
-
-            this.pointer := newPointer
-        }
-    }
-
-    class Writer {
-        string := ""
-        Write(string) {
-            this.string .= string
-        }
-
-        Flush() {
-            returnString := this.string
-            this.string := ""
-
-            return returnString
-        }
-    }
 }
+

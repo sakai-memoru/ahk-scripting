@@ -17,7 +17,22 @@ ExecuteCmd()
 ; ---------------------------- subroutine
 Perform()
 {
-	ExecuteCmd
+	;;ExecuteCmd
+	name := "AutoHotKey"
+	; Console.WriteLine("Hello, %%name%% !!")
+	Console.WriteLine(Format("Hello, {1} !!", name))
+	Console.WriteLine(Type(true))
+	Console.WriteLine(Type(12))
+	Console.WriteLine(Type(12.0))
+	Console.WriteLine(Type('c'))
+	Console.WriteLine(Type("String"))
+	Console.WriteLine(Type([]))
+	Console.WriteLine(Type({}))
+	Console.WriteLine(Type(Map()))
+	Console.WriteLine(Type(Array()))
+
+
+
 	return
 }
 
