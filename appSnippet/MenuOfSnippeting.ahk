@@ -4,7 +4,7 @@ SendMode 'Input'
 SetTitleMatchMode 2
 SetCapsLockState "AlwaysOff"
 
-#include ".\localScripts\SnippetingScript.ahk"
+#include ".\localScripts\SnippetingScript.ahk" ; include Util
 
 snp_get_ahk_dir(subdir := ""){
     baseDir := A_MyDocuments "\AutoHotKey"
@@ -34,9 +34,9 @@ snp_get_template_path(key) {
 
 SNP_HandlerGetBatchTempl(Item, *){
     target := snp_get_template_path("batch")
-    str := GetContent(target)
+    str := Util.GetContent(target)
     A_Clipboard := str
-    tempPath := GetTempFileName()
+    tempPath := Util.GetTempFileName()
     FileAppend str, tempPath
     Sleep 10
     Run tempPath
@@ -44,9 +44,9 @@ SNP_HandlerGetBatchTempl(Item, *){
 
 SNP_HandlerGetFrontTempl(Item, *){
     target := snp_get_template_path("front")
-    str := GetContent(target)
+    str := Util.GetContent(target)
     A_Clipboard := str
-    tempPath := GetTempFileName()
+    tempPath := Util.GetTempFileName()
     FileAppend str, tempPath
     Sleep 10
     Run tempPath
@@ -54,9 +54,9 @@ SNP_HandlerGetFrontTempl(Item, *){
 
 SNP_HandlerGetMenuTempl(Item, *){
     target := snp_get_template_path("menu")
-    str := GetContent(target)
+    str := Util.GetContent(target)
     A_Clipboard := str
-    tempPath := GetTempFileName()
+    tempPath := Util.GetTempFileName()
     FileAppend str, tempPath
     Sleep 10
     Run tempPath
@@ -114,7 +114,7 @@ SNP_DisplayMenu(){
 
 ;;; local functions
 SNP_Perform(val){
-	; OutputDebug(Format("val is {1}.`n", val))
+	; OutputDebug(Format("val is {1}.`n", vsal))
     ; OutputDebug(Format("GUID is {1}.`n", GetGuid()))
     SNP_DisplayMenu()
     return
