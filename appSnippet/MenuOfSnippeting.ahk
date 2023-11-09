@@ -4,10 +4,11 @@ SendMode 'Input'
 SetTitleMatchMode 2
 SetCapsLockState "AlwaysOff"
 
-#include ".\localScripts\SnippetingScript.ahk" ; include Util
+#include %A_ScriptDir%\localScripts\SnippetingScript.ahk ; include Util
+#include %A_ScriptDir%\config\settings.ahk
 
 snp_get_ahk_dir(subdir := ""){
-    baseDir := A_MyDocuments "\AutoHotKey"
+    baseDir := A_MyDocuments SNP_Config.MY_DIR
     if (subdir = ""){
         return baseDir
     } else {
@@ -17,19 +18,11 @@ snp_get_ahk_dir(subdir := ""){
 }
 
 snp_get_ahkrepo_dir(){
-    return EnvGet("WORKSPACE") "\ahk-scripting"
+    return EnvGet("WORKSPACE") SNP_Config.MY_REPO
 }
 
 snp_get_template_path(key) {
-    templdir := A_ScriptDir "\templates"
-    ;;
-    ;; intensionaly change an extension into "vbs" from "ahk"
-    dict := Map(
-        "batch", templdir "\template_batch.vbs" ,
-        "menu", templdir "\template_menu.vbs" ,
-        "front", templdir "\template.vbs"
-    )
-    return dict[key]
+    return SNP_Config.MY_DICT[key]
 }
 
 SNP_HandlerGetBatchTempl(Item, *){
@@ -68,12 +61,12 @@ SNP_HandlerOpenExplorer(Item, *){
 }
 
 SNP_HandlerOpenSnippetDir(Item, *){
-    target := snp_get_ahk_dir("\snippets")
+    target := snp_get_ahk_dir(SNP_Config.MY_DICT["snippets"])
     Run target
 }
 
 SNP_HandlerExplorerLib(Item, *){
-    target := snp_get_ahk_dir("\lib")
+    target := snp_get_ahk_dir(SNP_Config.MY_DICT["lib"])
     Run target
 }
 
@@ -83,11 +76,16 @@ SNP_HandlerOpenGitHub(Item, *){
 }
 
 SNP_HandlerExplorerReference(Item, *){
-    target := "https://www.autohotkey.com/docs/v2/"
+    target := SNP_Config.MY_REFSITE
 	Run target
     Sleep 100
 }
 
+SNP_HandlerOpenHelp(Item, *){
+    ahkexe_dir := ""
+    SplitPath(A_AhkPath,,&ahkexe_dir)
+	Run ahkexe_dir SNP_Config.MY_DICT["helpfile"]
+}
 
 SNP_HandlerOpenSubmenu(Item, *){
     mySubMenu := Menu()
@@ -105,6 +103,7 @@ SNP_DisplayMenu(){
     myMenu.Add "AHK libdir", SNP_HandlerExplorerLib
     myMenu.Add "Repo dir", SNP_HandlerOpenGitHub
     myMenu.Add
+    myMenu.Add "Help", SNP_HandlerOpenHelp
     myMenu.Add "References", SNP_HandlerExplorerReference
     myMenu.Add "Template", SNP_HandlerOpenSubmenu
     myMenu.Add "Snippets", SNP_HandlerOpenSnippetDir

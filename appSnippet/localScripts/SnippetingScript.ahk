@@ -23,7 +23,7 @@
 		; retPath := A_Temp "\tmp_" FormatTime( , "yyMMdd_HHmmss") ".ahk"
 		; retPath := A_ScriptDir "\tmp_" FormatTime( , "yyMMdd_HHmmss") ".ahk"
 		dtmstr := FormatTime( , "yyMMdd_")
-		retPath := A_WorkingDir "\tmp_" dtmstr Substr(Util.GetGuid(), 2, 6) ".ahk"
+		retPath := A_WorkingDir "\" dtmstr Substr(Util.GetGuid(), 2, 6) "_tmp.ahk"
 		OutputDebug(retPath "`n")
 		return retPath
 
